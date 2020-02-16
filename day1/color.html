@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script>
+        changeColor=()=>{
+            let color= document.getElementById('colorinput').value;
+            document.getElementsByClassName('mydiv')[0].style.backgroundColor = color;
+        }
+    </script>
+    <style>
+        .mydiv{
+            height:200px;
+            width:200px;
+            background-color: 'green';
+        }
+    </style>
+</head>
+<body>
+    <input id="colorinput">
+    <button onclick="changeColor()" >Change</button>
+    <div class='mydiv'>
+    </div>
+</body>
+</html>
