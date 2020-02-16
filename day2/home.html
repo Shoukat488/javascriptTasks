@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <style>
+        .container {
+            flex: 1;
+        }
+
+        .task {
+            font-size: 60;
+            font-weight: bold;
+        }
+
+        .note {
+            font-size: 32;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="searchOpt">
+            <input>
+            <select id="edit">
+                <option value="time">Sort by last time</option>
+                <option value="edit">Sort by last edit</option>
+                <option value="name">Sort by name</option>
+            </select>
+        </div>
+        <div class="list">
+            <table id="table">
+            </table>
+        </div>
+        <button id="createButton" onclick="nevToEditor()">
+            CreateTask
+        </button>
+    </div>
+</body>
+<script>
+    renderList = () => {
+        let data = JSON.parse(localStorage.getItem('todo'))
+        let elements = ""
+        console.log(data)
+        data.forEach((item, i) => {
+            elements += `<tr key={i}>
+                <td>
+                    <div class="task">
+                    ${item.task}
+                    </div>
+                    <div class="note">
+                    ${item.note}
+                    </div>
+                    <button onClick="edit(${i})">
+                    Edit
+                    </button>
+                <td/>
+                <tr>`
+        });
+        if (elements.length > 0)
+            document.getElementById('table').innerHTML = elements;
+    }
+    nevToEditor = () => {
+        window.location.href = './main.html'
+    }
+    edit = (key) => {
+        console.log(key)
+        let td = document.getElementsByTagName('td');
+        console.log(td[0].children[1].textContent)
+    }
+    sortByName = () => {
+        let data = JSON.parse(localStorage.getItem('todo'))
+        // let tasks = []
+        // data.forEach((element, index) => {
+        //     tasks.push((element.task).toLowerCase())
+        // });
+        
+        // tasks.sort((a, b)=>{
+            
+        // })
+        for (let i = 0; i < tasks.length - 1; i++) {
+            for (let j = 0; j < tasks.length - i - 1; j++) {
+                if (data[j].task > data[j + 1].task) {
+                    console.log(data[j].task, data[j + 1].task)
+                    let temp = data[j].task;
+                    data[j].task = data[j + 1].task;
+                    data[j + 1].task = temp;
+                }
+            }
+        }
+
+        console.log("data from sort:", data)
+
+    }
+    sortByName();
+    renderList();
+
+</script>
+
+</html>

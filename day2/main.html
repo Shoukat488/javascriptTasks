@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script>
+        submit=()=>{
+            let task = document.getElementById('task').value;
+            let note = document.getElementById('note').value;
+            let time = new Date();
+
+            let newData = {
+                task,note,
+                time
+            }
+            let oldData =  JSON.parse(localStorage.getItem('todo'));
+            if(oldData)
+            {
+                oldData.push(newData)
+                localStorage.setItem('todo',JSON.stringify(oldData))
+
+            }
+            else
+            {
+            let data = []
+            data.push(newData)
+            localStorage.setItem('todo',JSON.stringify(data))
+            }
+
+            document.getElementById('task').value = "";
+            document.getElementById('note').value = "";
+        }
+        nevHome=()=>{
+            window.location.href = './home.html'
+        }
+    </script>
+    <style>
+    .mainDiv{
+        flex: 1;
+    }
+    </style>
+</head>
+<body>
+    <div class="mainDiv">
+        <button id="homeButton" onclick="nevHome()">
+            Home
+        </button>
+        <input id="task" >
+        <textarea id="note">
+
+        </textarea>
+        <button id="submit" onclick="submit()">
+            Create
+        </button>
+    </div>
+</body>
+</html>
