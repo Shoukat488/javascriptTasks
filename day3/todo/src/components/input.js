@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Input = (props) => {
     const [task, setTask] = useState('');
     const [note, setNote] = useState('');
+    const [isUpdateRender, setIsUpdateRender] = useState(false)
+
+    useEffect(() => {
+        console.log("did mount")
+        console.log("isupdated: ", isUpdateRender)
+        if (props.update.flag && !isUpdateRender) {
+            console.log("isUpdated", props.todo)
+            // console.log("key: ",props.updateKey)
+            setIsUpdateRender(true);
+            setNote(props.todo[props.update.key].task)
+            setTask(props.todo[props.update.key].note)
+        }
+    })
     const add = () => {
         if (task.length && note.length) {
             console.log("task: ", task)
@@ -25,6 +38,8 @@ const Input = (props) => {
             console.log({ newTodo })
             setTask('')
             setNote('')
+            props.addEvent(newTodo)
+            setIsUpdateRender(false)
         }
     }
     return (
