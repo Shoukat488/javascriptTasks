@@ -1,0 +1,15 @@
+Constructor(1) // one time
+willMount(2) // one time
+DidMount (4)  // one time
+WillUnmount // one time
+ShouldUpdate // if we don't to rerener on state change we can return true or false
+e.g
+shouldUpdate(){
+if(x==3)
+return true; // component will be rerender
+else
+return false;
+}
+DidUpdate
+WillRecieveProps/getDriveStateFormProps 
+render (3)
