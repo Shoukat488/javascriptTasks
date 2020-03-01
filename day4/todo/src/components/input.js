@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import NoteServices from '../services/service';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-const mapStateTo=(state)=>{
+const mapStateToState=(state)=>{
     return{
-        todo : state.todo
+        todo : state.Todo.todo
     }
 }
 const mapDispatchToProp=(dispatch)=>{
@@ -50,14 +50,14 @@ const Input = (props) => {
             }
             let newTodo = [];
             if (isEditing) {
-                newTodo = [...todo]
-                newTodo[index] = newData
-            }
+                newTodo = todo ? [...todo] : []
+                newTodo[index] = newData 
+            } 
             else
-                newTodo = [
+                newTodo = todo ? [
                     ...todo,
                     newData
-                ]
+                ] : [newData]
 
             props.setTodo(newTodo)
             console.log({ newTodo })
@@ -82,4 +82,4 @@ const Input = (props) => {
 }
 
 
-export default connect(mapStateTo,mapDispatchToProp)(Input);
+export default connect(mapStateToState,mapDispatchToProp)(Input);

@@ -1,51 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
 import NoteServices from '../services/service';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 
-const mapStateToProps=(state)=>{
-    return {todo: state.todo}
+const mapStateToProps = (state) => {
+    return { todo: state.Todo.todo }
 }
 
 const List = (props) => {
 
-    const todo = props.todo;
+    const [todo, setTodo] = useState([])
     const [todo2, setTodo2] = useState([]);
     const [isSelected, setSelecting] = useState(false)
-    const [isSorted , setIsSorted] = useState(false)
-    let data;
-    if (isSelected)
-        data = todo2 ? todo2 :[]
-    else
-        data = todo ? todo : []
+    const [isSorted, setIsSorted] = useState(false)
+    const [rowData , setRowData] = useState(null)
+    useEffect(() => {
+        console.log("props: ",props)
+        // setTodo(props.todo ? props.todo : [])
+        const locaTodo = props.todo;
 
-    let rows = data.map((item, key) => {
-        return (
-            <tr key={key}>
-                <td >{item.task} </td>
-                <td >
-                    {item.note}
-                </td>
-                <td>
-                    {item.time.toString()}
-                </td>
-                <td>
-                    <button onClick={() => { edit(key) }}>
-                        Edit
-        </button>
-                </td>
-                <td>
-                    <button onClick={() => { remove(key) }}>
-                        Remove
-          </button>
-                </td>
-                <td />
-            </tr>
-        )
+        let data = [];
+        if (isSelected)
+            data = todo2 ? todo2 : []
+        else
+            data = locaTodo ? locaTodo : []
+            // let rows = []
+        let rows = data.map((item, key) => {
+            return (
+                <tr key={key}>
+                    <td >{item.task} </td>
+                    <td >
+                        {item.note}
+                    </td>
+                    <td>
+                        {item.time.toString()}
+                    </td>
+                    <td>
+                        <button onClick={() => { edit(key) }}>
+                            Edit
+            </button>
+                    </td>
+                    <td>
+                        <button onClick={() => { remove(key) }}>
+                            Remove
+              </button>
+                    </td>
+                    <td />
+                </tr>
+            )
 
-    })
-    
+        })
+        console.log("todo : ",locaTodo)
+        setRowData(rows)
+        setTodo(locaTodo)
+    }, [])
+
     const sortByName = () => {
         // let tasks = []
         for (let i = 0; i < todo.length - 1; i++) {
@@ -80,7 +90,7 @@ const List = (props) => {
 
     const edit = (key) => {
         console.log(key)
-        props.history.push('/input',{index: key })
+        props.history.push('/input', { index: key })
     }
     const remove = (key) => {
         console.log("key: ", key)
@@ -145,14 +155,14 @@ const List = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows}
+                    {rowData}
                 </tbody>
             </table>
             {/* <div style={{ borderWidth: 3 }}>
                 Add items
           <Input update={update} todo={todo} addEvent={add} />
             </div> */}
-            <button onClick={()=>add()}>Add</button>
+            <button onClick={() => add()}>Add</button>
         </Router>
     );
 }
